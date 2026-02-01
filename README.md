@@ -4,8 +4,8 @@ Hệ thống thương mại điện tử bán quần áo các thương hiệu đ
 
 ## 📊 Tài liệu thiết kế
 
-- **Class Diagram:** [docs/diagrams/class-diagram.png](docs/diagrams/class-diagram.png)
-- **Phân tích hệ thống:** [docs/analysis/PHAN_TICH_CLASS_DIAGRAM.docx](docs/analysis/PHAN_TICH_CLASS_DIAGRAM.docx)
+- **Class Diagram:** [https://mermaid.ai/d/ef815c09-2e3f-4210-8510-c7816400d099)
+- **Phân tích hệ thống:** [https://docs.google.com/document/d/1u0eXGbggCsc7AWKBlpj1MJY_3zWHBM8gMTG1ctk0uv0/edit?usp=sharing)
 
 ## 🎯 Tính năng chính
 
@@ -17,8 +17,8 @@ Hệ thống thương mại điện tử bán quần áo các thương hiệu đ
 
 ## 👥 Thành viên nhóm
 
-- Nguyễn Cao Điền - MSSV
-- Trịnh Minh Đạt- MSSV
-- Lý Minh Đạt- MSSV
+- Nguyễn Cao Điền 
+- Trịnh Minh Đạt
+- Lý Minh Đạt
 - Lê Dương Anh Khoa
 - Nguyễn Đức Trung
