@@ -6,6 +6,7 @@ Hệ thống thương mại điện tử bán quần áo các thương hiệu đ
 
 - **Class Diagram:** [https://mermaid.ai/d/ef815c09-2e3f-4210-8510-c7816400d099)
 - **Phân tích hệ thống:** [https://docs.google.com/document/d/1u0eXGbggCsc7AWKBlpj1MJY_3zWHBM8gMTG1ctk0uv0/edit?usp=sharing)
+- **ERD Diagram:** [https://mermaid.ai/d/899d1806-fc50-4cbe-97aa-9dc18a69645a]
 
 ## 🎯 Tính năng chính
 
