@@ -205,6 +205,19 @@ class ApiController {
             echo json_encode(['error' => $e->getMessage()]);
         }
     }
+    public function getCategories() {
+        header('Content-Type: application/json');
+        try {
+            $stmt = $this->db->prepare("SELECT category_id, category_name, slug FROM categories ORDER BY category_name ASC");
+            $stmt->execute();
+            $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode(['categories' => $categories]);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    }
+
     public function getProducts() {
         header('Content-Type: application/json');
         try {

@@ -64,6 +64,28 @@ class ProductController {
                 $avgRating = $totalRating / count($reviews);
             }
 
+            // Lấy sản phẩm gợi ý: cùng category, loại trừ sp hiện tại
+            $stmtSugg = $this->db->prepare("
+    SELECT p.product_id AS id,
+           p.product_name AS name,
+           p.base_price AS price,
+           p.category,
+           (SELECT image_url FROM product_images
+            WHERE product_id = p.product_id AND is_primary = 1 LIMIT 1) AS image
+    FROM products p
+    WHERE p.product_id != :id
+    ORDER BY RAND()
+    LIMIT 4
+");
+$stmtSugg->execute([':id' => $id]);
+$suggestedProducts = $stmtSugg->fetchAll(PDO::FETCH_ASSOC);
+
+            // Build image URL cho từng sản phẩm gợi ý
+            foreach ($suggestedProducts as &$sp) {
+                $sp['image'] = $productModel->buildImageUrl($sp['image'] ?? '');
+            }
+            unset($sp);
+
             require BASE_PATH . '/app/views/productdetail.php';
         } catch (Exception $e) {
             http_response_code(500);
