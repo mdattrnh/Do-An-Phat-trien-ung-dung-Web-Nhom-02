@@ -189,9 +189,15 @@ nav.scrolled {
   transition: all 0.3s ease;
 }
 
-.nav.mobile-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav.mobile-open .nav-toggle span:nth-child(2) { opacity: 0; }
-.nav.mobile-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav.mobile-open .nav-toggle span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav.mobile-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+.nav.mobile-open .nav-toggle span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
 
 /* MOBILE MENU OVERLAY */
 .mobile-menu-overlay {
@@ -248,19 +254,19 @@ nav.scrolled {
   .desktop-only {
     display: none !important;
   }
-  
+
   .nav-toggle {
     display: flex;
   }
-  
+
   nav {
     padding: 1.2rem 1.5rem;
   }
-  
+
   .nav-logo {
     font-size: 1.5rem;
   }
-  
+
   .cart-btn {
     padding: 0.5rem 1rem;
     font-size: 0.7rem !important;
@@ -279,8 +285,10 @@ nav.scrolled {
 .hero-left {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 4rem 3rem 4rem 3rem;
+  justify-content: center; /* giữa theo chiều dọc */
+  align-items: center; /* giữa theo chiều ngang */
+  text-align: center; /* chữ nằm giữa */
+  padding: 4rem 3rem;
 }
 
 .hero-tag {
@@ -608,7 +616,7 @@ section {
 }
 
 .section-eyebrow {
-  font-size: 0.70rem;
+  font-size: 0.7rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--light);
@@ -616,7 +624,7 @@ section {
 }
 
 .section-title {
-  font-family: 'Be Vietnam Pro', sans-serif !important;
+  font-family: "Be Vietnam Pro", sans-serif !important;
   font-weight: 700;
   font-size: clamp(2.2rem, 5vw, 4rem);
   line-height: 1;
@@ -664,8 +672,13 @@ section {
 }
 
 @keyframes imgPulse {
-  0%, 100% { background: #eee; }
-  50% { background: #f5f5f5; }
+  0%,
+  100% {
+    background: #eee;
+  }
+  50% {
+    background: #f5f5f5;
+  }
 }
 
 .product-img img {
@@ -858,7 +871,9 @@ section {
   align-items: flex-end;
   padding: 1.5rem;
   position: relative;
+  overflow: hidden;
   transition: transform 0.4s ease;
+  background: #ddd;
 }
 
 .look-card:hover .look-inner {
@@ -869,41 +884,125 @@ section {
   min-height: 480px;
 }
 
-.look-info {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(8px);
-  padding: 0.8rem 1rem;
-  border-radius: 12px;
+/* LOOKBOOK CARD */
+.look-card {
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
 }
 
+/* KHUNG ẢNH */
+.look-inner {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s ease;
+}
+
+/* HOVER */
+.look-card:hover .look-inner {
+  transform: scale(1.03);
+}
+
+/* ẢNH */
+.look-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.7s ease,
+    filter 0.5s ease;
+}
+
+/* HOVER ẢNH */
+.look-card:hover .look-img {
+  transform: scale(1.1);
+  filter: brightness(1.05);
+}
+
+/* OVERLAY NHẸ HƠN (đỡ tối) */
+.look-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.12) 40%,
+    rgba(0, 0, 0, 0.02) 100%
+  );
+  z-index: 1;
+}
+
+/* BOX TEXT */
+.look-info {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 0.7rem 1rem;
+  border-radius: 999px; /* 👈 bo tròn xịn */
+  max-width: fit-content;
+  transition: all 0.3s ease;
+}
+
+/* HOVER BOX */
+.look-card:hover .look-info {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* TEXT */
 .look-name {
   font-weight: 500;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
+  color: var(--charcoal);
 }
 
 .look-price {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: var(--mid);
 }
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .lookbook-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 
-.look-bg-1 {
-  background: linear-gradient(160deg, #c4d4e8 0%, #d4c8e8 60%, #e8d5c4 100%);
+  .look-card:first-child {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .look-card:first-child .look-inner {
+    min-height: 320px;
+  }
 }
 
-.look-bg-2 {
-  background: linear-gradient(145deg, #c8d8c0, #d4c8e8);
-}
+@media (max-width: 600px) {
+  .lookbook-grid {
+    grid-template-columns: 1fr;
+  }
 
-.look-bg-3 {
-  background: linear-gradient(145deg, #f0d0b8, #e8d5c4);
-}
+  .look-card:first-child {
+    grid-column: span 1;
+  }
 
-.look-bg-4 {
-  background: linear-gradient(145deg, #d4c8e8, #c4d4e8);
-}
+  .look-inner,
+  .look-card:first-child .look-inner {
+    min-height: 260px;
+  }
 
-.look-bg-5 {
-  background: linear-gradient(145deg, #c8d8c0, #f0d0b8);
+  .look-info {
+    max-width: 100%;
+  }
 }
 
 /* ABOUT SECTION */
@@ -1185,7 +1284,7 @@ footer {
 }
 
 .cart-header h3 {
-  font-family: 'Be Vietnam Pro', sans-serif !important; 
+  font-family: "Be Vietnam Pro", sans-serif !important;
   font-size: 1.5rem;
   letter-spacing: 0.05em;
 }
@@ -1726,7 +1825,7 @@ footer {
   border-radius: 2rem;
   overflow: hidden;
   background: var(--white);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
 }
 
@@ -1791,7 +1890,7 @@ footer {
 }
 
 .detail-info h1 {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: clamp(3rem, 8vw, 5rem);
   line-height: 0.9;
   margin-bottom: 1.5rem;
@@ -1808,7 +1907,7 @@ footer {
 }
 
 .detail-price {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: clamp(2.5rem, 6vw, 4rem);
   color: var(--charcoal);
   margin-bottom: 2rem;
@@ -1841,7 +1940,7 @@ footer {
 
 .detail-size-pill {
   padding: 1rem;
-  border: 2px solid rgba(0,0,0,0.1);
+  border: 2px solid rgba(0, 0, 0, 0.1);
   background: transparent;
   border-radius: 1rem;
   font-weight: 600;
@@ -1885,12 +1984,12 @@ footer {
 .btn-primary:hover {
   background: var(--mid);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .detail-extra {
   padding-top: 3rem;
-  border-top: 1px solid rgba(0,0,0,0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .detail-extra h3 {
@@ -1917,7 +2016,7 @@ footer {
 
 .reviews-title {
   text-align: center;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-size: clamp(2.5rem, 6vw, 4rem);
   margin-bottom: 3rem;
   letter-spacing: -0.02em;
@@ -1928,7 +2027,7 @@ footer {
   border-radius: 2rem;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
 }
 
 .review-header {
@@ -1977,32 +2076,32 @@ footer {
   .product-detail-hero {
     padding: 6rem 1rem 2rem;
   }
-  
+
   .detail-hero-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
-  
+
   .detail-image-card {
     position: static;
   }
-  
+
   .detail-image img {
     height: 400px;
   }
-  
+
   .detail-gallery {
     grid-template-columns: repeat(3, 1fr);
   }
-  
+
   .detail-info h1 {
     font-size: clamp(2rem, 12vw, 3rem);
   }
-  
+
   .detail-price {
     font-size: clamp(2rem, 8vw, 3rem);
   }
-  
+
   .detail-actions {
     grid-template-columns: 1fr;
   }
@@ -2018,7 +2117,7 @@ footer {
 
 .product-card-link:hover .product-card {
   transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
 
 /* PAGINATION */
@@ -2087,7 +2186,7 @@ footer {
   transform: translateY(20px) scale(0.97);
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   max-height: 90vh;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.18);
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.18);
 }
 
 .modal-overlay.open .login-modal-box {
@@ -2107,7 +2206,7 @@ footer {
 }
 
 .login-modal-left::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -40px;
   right: -40px;
@@ -2119,7 +2218,7 @@ footer {
 }
 
 .login-modal-left::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -60px;
   left: -40px;
@@ -2148,7 +2247,7 @@ footer {
 
 .login-tagline {
   font-size: 0.82rem;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255, 255, 255, 0.45);
   font-weight: 300;
   line-height: 1.7;
   position: relative;
@@ -2158,7 +2257,7 @@ footer {
 .login-deco {
   width: 40px;
   height: 2px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 2px;
   position: relative;
   z-index: 1;
@@ -2177,7 +2276,7 @@ footer {
 .login-tabs {
   display: flex;
   gap: 0;
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
   border-radius: 100px;
   padding: 0.28rem;
 }
@@ -2200,7 +2299,7 @@ footer {
 .login-tab.active {
   background: var(--charcoal);
   color: var(--cream);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Form */
@@ -2225,7 +2324,7 @@ footer {
 }
 
 .form-group input {
-  border: 1px solid rgba(0,0,0,0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   background: var(--cream);
   border-radius: 12px;
   padding: 0.75rem 1rem;
@@ -2233,12 +2332,14 @@ footer {
   font-size: 0.88rem;
   color: var(--charcoal);
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .form-group input:focus {
   border-color: var(--charcoal);
-  box-shadow: 0 0 0 3px rgba(26,26,26,0.08);
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.08);
 }
 
 .form-options {
@@ -2270,7 +2371,9 @@ footer {
   transition: opacity 0.2s;
 }
 
-.forgot-link:hover { opacity: 1; }
+.forgot-link:hover {
+  opacity: 1;
+}
 
 .auth-submit {
   width: 100%;
@@ -2291,10 +2394,10 @@ footer {
 
 .auth-divider::before,
 .auth-divider::after {
-  content: '';
+  content: "";
   flex: 1;
   height: 1px;
-  background: rgba(0,0,0,0.08);
+  background: rgba(0, 0, 0, 0.08);
 }
 
 .btn-social {
@@ -2303,7 +2406,7 @@ footer {
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
-  border: 1px solid rgba(0,0,0,0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   background: var(--white);
   border-radius: 12px;
   padding: 0.75rem 1rem;

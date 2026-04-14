@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SOFT EDGE — Streetwear</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link
       href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;700&family=Bebas+Neue&display=swap"
       rel="stylesheet"
@@ -16,6 +17,7 @@
     </script>
   </head>
   <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <div class="cursor" id="cursor"></div>
     <div class="cursor-ring" id="cursorRing"></div>
 
@@ -76,10 +78,12 @@
     </div>
 
     <!-- HERO -->
-    <section class="hero">
-      <div class="hero-left">
+    <section class="hero" style="position: relative; min-height: 100vh; overflow: hidden;">
+      <img src="<?= ASSET_URL ?>/assets/image/hero.jpg" alt="Hero" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 0;" />
+      <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.2); z-index: 1;"></div>
+      <div class="hero-left" style="position: relative; z-index: 2; color: #fff;">
         <div class="hero-tag">SS 2025 — Drop 01</div>
-        <h1 class="hero-title">
+        <h1 class="hero-title"  >
           <span>SOFT</span>
           <em>EDGE</em>
         </h1>
@@ -90,22 +94,6 @@
         <div class="hero-actions">
           <a href="#collection" class="btn-primary">Khám phá ngay</a>
           <a href="#lookbook" class="btn-ghost">Lookbook</a>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="hero-visual">
-          <div class="hero-blob">
-            <div class="hero-model-placeholder"></div>
-          </div>
-          <div class="hero-label">
-            <strong>Aura Hoodie</strong>
-            <span>990.000 ₫</span>
-          </div>
-          <div class="hero-badge">NEW<br />DROP<br />✦</div>
-        </div>
-        <div class="hero-scroll">
-          <div class="scroll-line"></div>
-          Scroll
         </div>
       </div>
     </section>
@@ -155,17 +143,7 @@
           </select>
         </div>
         <!-- Row 2: Pills (GET method) -->
-        <div class="filter-pills" id="filterPills">
-          <a href="?category=all" class="pill active" data-category="all">Tất cả</a>
-          <a href="?category=hoodie" class="pill" data-category="hoodie">Hoodie</a>
-          <a href="?category=tshirt" class="pill" data-category="tshirt">T-Shirt</a>
-          <a href="?category=cargo" class="pill" data-category="cargo">Cargo</a>
-          <a href="?category=jacket" class="pill" data-category="jacket">Jacket</a>
-          <a href="?category=shorts" class="pill" data-category="shorts">Shorts</a>
-          <a href="?category=cap" class="pill" data-category="cap">Cap</a>
-          <a href="?category=bag" class="pill" data-category="bag">Bag</a>
-          <a href="?category=longsleeve" class="pill" data-category="longsleeve">Long Sleeve</a>
-        </div>
+        <div class="filter-pills" id="filterPills"></div>
       </div>
 
       <div class="products-grid" id="productsGrid"></div>
@@ -234,22 +212,7 @@
           </form>
 
           <!-- Register Form -->
-          <form class="auth-form hidden" id="formRegister" method="GET" action="#" onsubmit="handleRegister(event)">
-            <div class="form-group">
-              <label>Họ và tên</label>
-              <input type="text" id="regName" name="name" placeholder="Nguyễn Văn A" required />
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" id="regEmail" name="email" placeholder="email@example.com" required />
-            </div>
-            <div class="form-group">
-              <label>Mật khẩu</label>
-              <input type="password" id="regPassword" name="password" placeholder="Tối thiểu 8 ký tự" required minlength="8" />
-            </div>
-            <button type="submit" class="btn-primary auth-submit">Tạo tài khoản</button>
-            <p class="auth-terms">Bằng cách đăng ký, bạn đồng ý với <a href="#">Điều khoản dịch vụ</a> của chúng tôi.</p>
-          </form>
+          
         </div>
       </div>
     </div>
@@ -309,57 +272,78 @@
 
     <!-- LOOKBOOK -->
     <section class="lookbook" id="lookbook">
-      <div class="section-header fade-up">
-        <div>
-          <div class="section-eyebrow">SS 2025</div>
-          <div class="section-title">LOOKBOOK</div>
-        </div>
-        <a href="#" class="view-all">Xem tất cả →</a>
-      </div>
-      <div class="lookbook-grid">
-        <div class="look-card fade-up">
-          <div class="look-inner look-bg-1">
-            <div class="look-info">
-              <div class="look-name">Look 01 — "Still Waters"</div>
-              <div class="look-price">Aura Hoodie + Cloud Cargo</div>
-            </div>
-          </div>
-        </div>
-        <div class="look-card fade-up" style="transition-delay: 0.1s">
-          <div class="look-inner look-bg-2">
-            <div class="look-info">
-              <div class="look-name">Look 02 — "Morning Light"</div>
-              <div class="look-price">Soft Tee + Haze Jacket</div>
-            </div>
-          </div>
-        </div>
-        <div class="look-card fade-up" style="transition-delay: 0.2s">
-          <div class="look-inner look-bg-3">
-            <div class="look-info">
-              <div class="look-name">Look 03 — "Quiet Confidence"</div>
-              <div class="look-price">Cloud Cargo + Soft Tee</div>
-            </div>
-          </div>
-        </div>
-        <div class="look-card fade-up" style="transition-delay: 0.1s">
-          <div class="look-inner look-bg-4">
-            <div class="look-info">
-              <div class="look-name">Look 04 — "Drift"</div>
-              <div class="look-price">Haze Jacket + Aura Hoodie</div>
-            </div>
-          </div>
-        </div>
-        <div class="look-card fade-up" style="transition-delay: 0.2s">
-          <div class="look-inner look-bg-5">
-            <div class="look-info">
-              <div class="look-name">Look 05 — "Ease"</div>
-              <div class="look-price">Full Set — Drop 01</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="section-header fade-up">
+    <div>
+      <div class="section-eyebrow">SS 2025</div>
+      <div class="section-title">LOOKBOOK</div>
+    </div>
+    <a href="#" class="view-all">Xem tất cả →</a>
+  </div>
 
+  <div class="lookbook-grid">
+
+  <!-- LOOK 1 (to hơn) -->
+  <div class="look-card fade-up">
+    <div class="look-inner">
+      <img src="<?= ASSET_URL ?>/assets/image/look1.jpg" class="look-img" alt="Look 01">
+      <div class="look-overlay"></div>
+      <div class="look-info">
+        <div class="look-name">Look 01 — "Still Waters"</div>
+        <div class="look-price">Aura Hoodie + Cloud Cargo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOOK 2 -->
+  <div class="look-card fade-up" style="transition-delay: 0.1s">
+    <div class="look-inner">
+      <img src="<?= ASSET_URL ?>/assets/image/look2.jpg" class="look-img" alt="Look 02">
+      <div class="look-overlay"></div>
+      <div class="look-info">
+        <div class="look-name">Look 02 — "Morning Light"</div>
+        <div class="look-price">Soft Tee + Haze Jacket</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOOK 3 -->
+  <div class="look-card fade-up" style="transition-delay: 0.2s">
+    <div class="look-inner">
+      <img src="<?= ASSET_URL ?>/assets/image/look3.jpg" class="look-img" alt="Look 03">
+      <div class="look-overlay"></div>
+      <div class="look-info">
+        <div class="look-name">Look 03 — "Quiet Confidence"</div>
+        <div class="look-price">Cloud Cargo + Soft Tee</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOOK 4 -->
+  <div class="look-card fade-up" style="transition-delay: 0.1s">
+    <div class="look-inner">
+      <img src="<?= ASSET_URL ?>/assets/image/look4.jpg" class="look-img" alt="Look 04">
+      <div class="look-overlay"></div>
+      <div class="look-info">
+        <div class="look-name">Look 04 — "Drift"</div>
+        <div class="look-price">Haze Jacket + Aura Hoodie</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOOK 5 -->
+  <div class="look-card fade-up" style="transition-delay: 0.2s">
+    <div class="look-inner">
+      <img src="<?= ASSET_URL ?>/assets/image/look5.jpg" class="look-img" alt="Look 05">
+      <div class="look-overlay"></div>
+      <div class="look-info">
+        <div class="look-name">Look 05 — "Ease"</div>
+        <div class="look-price">Full Set — Drop 01</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
     <!-- NEWSLETTER -->
     <section class="newsletter">
       <div class="section-eyebrow">Stay in the loop</div>
@@ -372,41 +356,58 @@
     </section>
 
     <!-- ABOUT -->
-    <section class="about" id="about">
-      <div class="about-container">
-        <div class="about-content fade-up">
-          <div class="section-eyebrow">Về chúng tôi</div>
-          <h2 class="section-title">CÂU CHUYỆN<br />THƯƠNG HIỆU</h2>
-          <p>
-            SOFT EDGE được sinh ra từ mong muốn tái định nghĩa streetwear Việt
-            Nam. Chúng tôi không chạy theo xu hướng, mà tạo ra những sản phẩm
-            vượt thời gian với chất liệu cao cấp và thiết kế tối giản nhưng đầy
-            tinh tế.
-          </p>
-          <p>
-            Mỗi sản phẩm đều được sản xuất với số lượng giới hạn, đảm bảo tính
-            độc bản và trách nhiệm với môi trường.
-          </p>
-          <div class="about-stats">
-            <div class="stat">
-              <span class="stat-number">100%</span>
-              <span class="stat-label">Cotton Organic</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">50+</span>
-              <span class="stat-label">Limited Drops</span>
-            </div>
-            <div class="stat">
-              <span class="stat-number">10k+</span>
-              <span class="stat-label">Khách hàng</span>
-            </div>
-          </div>
+    <section class="about" id="about" style="background: black; padding: 7rem 3rem;">
+  <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+
+    <div id="aboutCarousel"
+         class="carousel slide"
+         data-bs-ride="carousel"
+         data-bs-interval="3000"
+         style="width: 100%; max-width: 1400px; border-radius: 24px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.10);">
+
+      <div class="carousel-indicators" style="margin-bottom: 1rem;">
+        <button type="button" data-bs-target="#aboutCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#aboutCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#aboutCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+
+      <div class="carousel-inner" style="border-radius: 24px;">
+        <div class="carousel-item active">
+          <img src="<?= ASSET_URL ?>/assets/image/about1.jpg"
+               class="d-block w-100"
+               alt="About 1"
+               style="height: 650px; object-fit: cover;">
         </div>
-        <div class="about-image fade-up">
-          <div class="about-img-placeholder"></div>
+
+        <div class="carousel-item">
+          <img src="<?= ASSET_URL ?>/assets/image/about2.jpg"
+               class="d-block w-100"
+               alt="About 2"
+               style="height: 650px; object-fit: cover;">
+        </div>
+
+        <div class="carousel-item">
+          <img src="<?= ASSET_URL ?>/assets/image/about3.jpg"
+               class="d-block w-100"
+               alt="About 3"
+               style="height: 650px; object-fit: cover;">
         </div>
       </div>
-    </section>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#aboutCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true" style="width: 3rem; height: 3rem;"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+
+      <button class="carousel-control-next" type="button" data-bs-target="#aboutCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true" style="width: 3rem; height: 3rem;"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+
+    </div>
+
+  </div>
+</section>
 
     <!-- FOOTER -->
     <footer>
