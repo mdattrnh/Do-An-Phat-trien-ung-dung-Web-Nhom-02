@@ -13,7 +13,7 @@
 | 2 | Nguyễn Cao Điền | 31241023473 |
 | 3 | Nguyễn Đức Trung | |
 | 4 | Lý Minh Đạt | |
-| 5 | Lê Dương Anh Khoa | |
+| 5 | Lê Dương Anh Khoa | 31241020839 |
 
 **Giảng viên hướng dẫn:** TS. Đặng Ngọc Hoàng Thành
 
