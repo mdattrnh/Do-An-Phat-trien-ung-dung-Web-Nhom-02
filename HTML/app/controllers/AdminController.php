@@ -333,41 +333,75 @@ class AdminController {
         require BASE_PATH . '/app/views/admin/categories.php';
     }
 
-    public function saveCategory() {
-        $this->requireAuth();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $db = Database::getInstance()->getConnection();
-            $this->ensureCategoriesTable($db);
+   public function saveCategory() {
+    $this->requireAuth();
 
-            $id = trim($_POST['category_id'] ?? '');
-            $name = trim($_POST['category_name'] ?? '');
-            $slug = trim($_POST['slug'] ?? '');
-            $sizeMode = in_array($_POST['size_mode'] ?? 'default', ['default', 'numeric_38_42'], true) ? $_POST['size_mode'] : 'default';
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $db = Database::getInstance()->getConnection();
+        $this->ensureCategoriesTable($db);
 
-            if ($name === '') {
-                $_SESSION['admin_flash_error'] = 'Tên danh mục không được để trống.';
-                header("Location: " . BASE_URL . "/admin/categories");
-                exit;
-            }
+        $id = trim($_POST['category_id'] ?? '');
+        $name = trim($_POST['category_name'] ?? '');
+        $slug = trim($_POST['slug'] ?? '');
+        $sizeMode = in_array($_POST['size_mode'] ?? 'default', ['default', 'numeric_38_42'], true) 
+            ? $_POST['size_mode'] 
+            : 'default';
 
-            if ($slug === '') {
-                $slug = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $name));
-            }
-
-            if ($id === '') {
-                $stmt = $db->prepare("INSERT INTO categories (category_id, category_name, slug, size_mode) VALUES (UUID(), ?, ?, ?)");
-                $stmt->execute([$name, $slug, $sizeMode]);
-                $_SESSION['admin_flash_success'] = 'Thêm danh mục mới thành công.';
-            } else {
-                $stmt = $db->prepare("UPDATE categories SET category_name = ?, slug = ?, size_mode = ? WHERE category_id = ?");
-                $stmt->execute([$name, $slug, $sizeMode, $id]);
-                $_SESSION['admin_flash_success'] = 'Cập nhật danh mục thành công.';
-            }
+        if ($name === '') {
+            $_SESSION['admin_flash_error'] = 'Tên danh mục không được để trống.';
+            header("Location: " . BASE_URL . "/admin/categories");
+            exit;
         }
 
-        header("Location: " . BASE_URL . "/admin/categories");
-        exit;
+        // Tạo slug nếu chưa có
+        if ($slug === '') {
+            $slug = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $name));
+        }
+
+        // 🔥 FIX: xử lý trùng slug
+        $baseSlug = $slug;
+        $i = 1;
+
+        while (true) {
+            if ($id === '') {
+                // INSERT
+                $stmt = $db->prepare("SELECT COUNT(*) FROM categories WHERE slug = ?");
+                $stmt->execute([$slug]);
+            } else {
+                // UPDATE (loại trừ chính nó)
+                $stmt = $db->prepare("SELECT COUNT(*) FROM categories WHERE slug = ? AND category_id != ?");
+                $stmt->execute([$slug, $id]);
+            }
+
+            if ($stmt->fetchColumn() == 0) break;
+
+            $slug = $baseSlug . '-' . $i;
+            $i++;
+        }
+
+        if ($id === '') {
+            $stmt = $db->prepare("
+                INSERT INTO categories (category_id, category_name, slug, size_mode) 
+                VALUES (UUID(), ?, ?, ?)
+            ");
+            $stmt->execute([$name, $slug, $sizeMode]);
+
+            $_SESSION['admin_flash_success'] = 'Thêm danh mục mới thành công.';
+        } else {
+            $stmt = $db->prepare("
+                UPDATE categories 
+                SET category_name = ?, slug = ?, size_mode = ? 
+                WHERE category_id = ?
+            ");
+            $stmt->execute([$name, $slug, $sizeMode, $id]);
+
+            $_SESSION['admin_flash_success'] = 'Cập nhật danh mục thành công.';
+        }
     }
+
+    header("Location: " . BASE_URL . "/admin/categories");
+    exit;
+}
 
     public function deleteCategory() {
         $this->requireAuth();
@@ -430,49 +464,26 @@ class AdminController {
         require BASE_PATH . '/app/views/admin/users.php';
     }
 
-    public function deleteUser() {
-        $this->requireAuth();
-        if (isset($_GET['delete'])) {
-            $db = Database::getInstance()->getConnection();
-            $userId = $_GET['delete'];
+public function deleteUser() {
+    $this->requireAuth();
 
-            try {
-                $db->beginTransaction();
+    if (isset($_GET['delete'])) {
+        $db = Database::getInstance()->getConnection();
+        $userId = $_GET['delete'];
 
-                // First, get the customer_id for this user
-                $customerStmt = $db->prepare("SELECT customer_id FROM customers WHERE user_id = ?");
-                $customerStmt->execute([$userId]);
-                $customer = $customerStmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $db->prepare("DELETE FROM users WHERE user_id = ? AND role = 'customer'");
+            $stmt->execute([$userId]);
 
-                if ($customer) {
-                    $customerId = $customer['customer_id'];
-
-                    // Delete addresses first (orders reference addresses with SET NULL)
-                    $db->prepare("DELETE FROM addresses WHERE customer_id = ?")->execute([$customerId]);
-
-                    // Delete order items, shipments, payments (CASCADE from orders)
-                    $db->prepare("DELETE FROM order_items WHERE order_id IN (SELECT order_id FROM orders WHERE customer_id = ?)")->execute([$customerId]);
-                    $db->prepare("DELETE FROM shipments WHERE order_id IN (SELECT order_id FROM orders WHERE customer_id = ?)")->execute([$customerId]);
-                    $db->prepare("DELETE FROM payments WHERE order_id IN (SELECT order_id FROM orders WHERE customer_id = ?)")->execute([$customerId]);
-
-                    // Delete orders
-                    $db->prepare("DELETE FROM orders WHERE customer_id = ?")->execute([$customerId]);
-                }
-
-                // Finally, delete the user (CASCADE will handle customers table)
-                $stmt = $db->prepare("DELETE FROM users WHERE user_id = ? AND role = 'customer'");
-                $stmt->execute([$userId]);
-
-                $db->commit();
-                $_SESSION['admin_flash_success'] = 'Xóa tài khoản thành công.';
-            } catch (PDOException $e) {
-                $db->rollBack();
-                $_SESSION['admin_flash_error'] = 'Xóa tài khoản thất bại: ' . $e->getMessage();
-            }
+            $_SESSION['admin_flash_success'] = 'Xóa tài khoản thành công.';
+        } catch (PDOException $e) {
+            $_SESSION['admin_flash_error'] = 'Xóa thất bại: ' . $e->getMessage();
         }
-        header("Location: " . BASE_URL . "/admin/users");
-        exit;
     }
+
+    header("Location: " . BASE_URL . "/admin/users");
+    exit;
+}
 
     public function orders() {
         $this->requireAuth();
