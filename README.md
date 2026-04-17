@@ -10,7 +10,7 @@
 | STT | Họ và Tên | MSSV |
 |-----|-----------|------|
 | 1 | Trịnh Minh Đạt *(Nhóm Trưởng)* | 31241022341 |
-| 2 | Nguyễn Cao Điền | |
+| 2 | Nguyễn Cao Điền | 31241023473 |
 | 3 | Nguyễn Đức Trung | |
 | 4 | Lý Minh Đạt | |
 | 5 | Lê Dương Anh Khoa | |
